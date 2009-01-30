@@ -1,0 +1,6 @@
+; $Id$
+
+name = PclZip
+description = PclZip integration (see <a href="http://www.phpconcept.net/pclzip/index.en.php" target="_blank">the author's website</a> )
+package = PclZip
+core = 6.x
