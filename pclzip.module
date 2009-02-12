@@ -14,6 +14,47 @@ function pclzip_help($path, $arg) {
   return $output;
 }
 
+/**
+* Implementation of hook_menu
+*/
+function pclzip_menu() {
+  $items = array();
+
+  $items['admin/settings/pclzip'] = array(
+    'title'                       => t('Pclzip'),
+    'description'             => t('Settings for the pclzip module.'),
+    'page callback'          => 'drupal_get_form',
+    'page arguments'      => array('pclzip_settings'),
+    'access arguments'    => array('administer site configuration'),
+    'type'                         => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+* Admin settings
+*/
+function pclzip_settings() {
+
+  if (pclzip_library_exists()) {
+
+    drupal_set_message(t('Library is installed'));
+  }
+}
+
+/**
+* Check if the library exists
+*/
+function pclzip_library_exists() {
+  $pclzip_path = drupal_get_path('module', 'pclzip').'/pclzip/pclzip.lib.php';
+  if (!is_file($pclzip_path)) {
+    drupal_set_message(t("Could not find the PclZip library file : !pclzip_path", array('!pclzip_path' =>$pclzip_path)), 'error');
+    return FALSE;
+  }
+  return TRUE;
+}
+
 /*
 * Build archive
 */
