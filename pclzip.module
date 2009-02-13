@@ -36,10 +36,28 @@ function pclzip_menu() {
 * Admin settings
 */
 function pclzip_settings() {
-
   if (pclzip_library_exists()) {
+    //drupal_set_message(t('Library is installed'));
+    $form = array();
 
-    drupal_set_message(t('Library is installed'));
+    // get extra cck fields modules names
+    if (module_exists('pclzip_extra_cck_modules') || module_exists('pclzip_zip_node_files')) {
+        $form['extra_cck_fields_fieldset'] = array(
+          '#type'               => 'fieldset',
+          '#title'                => t('CCK extra fields.'),
+          '#collapsible'      =>TRUE,
+          '#collapsed'        =>TRUE,
+        );
+        $form['extra_cck_fields_fieldset']['extra_cck_fields'] = array(
+          '#type'                  => 'textfield',
+          '#title'                   => t('CCK extra fields.'),
+          '#default_value'   => variable_get('pclzip_extra_cck_modules', "'imagefield','filefield','imceimage'"),
+          '#description'        => t("Enter the cck extra files fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'imagefield','filefield','imceimage'</strong>"),
+        );
+    }
+    if (count($form)) {
+      return system_settings_form($form);
+    }
   }
 }
 
@@ -53,6 +71,19 @@ function pclzip_library_exists() {
     return FALSE;
   }
   return TRUE;
+}
+
+/*
+* Get extra fields form
+*/
+function pclzip_get_extra_cck_fields() {
+  // get the fields names
+  $fields_names = array();
+  $result = db_query("SELECT field_name FROM {content_node_field_instance} WHERE widget_module IN (".variable_get('pclzip_extra_cck_modules', "'imagefield','filefield','imceimage'").")");
+  while ($field = db_fetch_object($result)) {
+    $fields_names[$field->field_name] = $field->field_name;
+  }
+  return $fields_names;
 }
 
 /*
