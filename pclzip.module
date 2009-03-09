@@ -92,8 +92,7 @@ function pclzip_get_extra_cck_fields() {
 function pclzip_build_archive($filename) {
   // get the temp file
   global $pclzip_temp_file;
-  $pclzip_temp_file = tempnam(sys_get_temp_dir(), $filename);
-
+  $pclzip_temp_file = tempnam(file_directory_temp(), $filename);
   // build the archive
   require_once('pclzip/pclzip.lib.php');
   return new PclZip($pclzip_temp_file);
