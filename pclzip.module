@@ -40,20 +40,22 @@ function pclzip_settings() {
     //drupal_set_message(t('Library is installed'));
     $form = array();
 
-    // get extra cck fields modules names
-    if (module_exists('pclzip_extra_cck_modules') || module_exists('pclzip_zip_node_files')) {
-        $form['extra_cck_fields_fieldset'] = array(
-          '#type'               => 'fieldset',
-          '#title'                => t('CCK extra fields.'),
-          '#collapsible'      =>TRUE,
-          '#collapsed'        =>TRUE,
-        );
-        $form['extra_cck_fields_fieldset']['extra_cck_fields'] = array(
-          '#type'                  => 'textfield',
-          '#title'                   => t('CCK extra fields.'),
-          '#default_value'   => variable_get('pclzip_extra_cck_modules', "'imagefield','filefield'"),
-          '#description'        => t("Enter the cck extra files fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'imagefield','filefield'</strong>"),
-        );
+    if (module_exists('content')) {
+      // get extra cck fields modules names
+      if (module_exists('pclzip_extra_cck_modules') || module_exists('pclzip_zip_node_files')) {
+          $form['extra_cck_fields_fieldset'] = array(
+            '#type'               => 'fieldset',
+            '#title'                => t('CCK extra fields.'),
+            '#collapsible'      =>TRUE,
+            '#collapsed'        =>TRUE,
+          );
+          $form['extra_cck_fields_fieldset']['extra_cck_fields'] = array(
+            '#type'                  => 'textfield',
+            '#title'                   => t('CCK extra fields.'),
+            '#default_value'   => variable_get('pclzip_extra_cck_modules', "'imagefield','filefield'"),
+            '#description'        => t("Enter the cck extra files fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'imagefield','filefield'</strong>"),
+          );
+      }
     }
     if (count($form)) {
       return system_settings_form($form);
