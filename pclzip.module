@@ -2,8 +2,8 @@
 // $Id$
 
 /**
-* Display help and module information
-*/
+ * Display help and module information
+ */
 function pclzip_help($path, $arg) {
   $output = '';
   switch ($path) {
@@ -15,26 +15,26 @@ function pclzip_help($path, $arg) {
 }
 
 /**
-* Implementation of hook_menu
-*/
+ * Implementation of hook_menu
+ */
 function pclzip_menu() {
   $items = array();
 
   $items['admin/settings/pclzip'] = array(
-    'title'                       => t('Pclzip'),
-    'description'             => t('Settings for the pclzip module.'),
-    'page callback'          => 'drupal_get_form',
-    'page arguments'      => array('pclzip_settings'),
-    'access arguments'    => array('administer site configuration'),
-    'type'                         => MENU_NORMAL_ITEM,
+    'title'             => t('Pclzip'),
+    'description'       => t('Settings for the pclzip module.'),
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('pclzip_settings'),
+    'access arguments'  => array('administer site configuration'),
+    'type'              => MENU_NORMAL_ITEM,
   );
 
   return $items;
 }
 
 /**
-* Admin settings
-*/
+ * Admin settings
+ */
 function pclzip_settings() {
   if (pclzip_library_exists()) {
     //drupal_set_message(t('Library is installed'));
@@ -44,16 +44,16 @@ function pclzip_settings() {
       // get extra cck fields modules names
       if (module_exists('pclzip_extra_cck_modules') || module_exists('pclzip_zip_node_files')) {
           $form['extra_cck_fields_fieldset'] = array(
-            '#type'               => 'fieldset',
-            '#title'                => t('CCK extra fields.'),
-            '#collapsible'      =>TRUE,
-            '#collapsed'        =>TRUE,
+            '#type'         => 'fieldset',
+            '#title'        => t('CCK extra fields.'),
+            '#collapsible'  =>TRUE,
+            '#collapsed'    =>TRUE,
           );
-          $form['extra_cck_fields_fieldset']['extra_cck_fields'] = array(
-            '#type'                  => 'textfield',
-            '#title'                   => t('CCK extra fields.'),
-            '#default_value'   => variable_get('pclzip_extra_cck_modules', "'imagefield','filefield'"),
-            '#description'        => t("Enter the cck extra files fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'imagefield','filefield'</strong>"),
+          $form['extra_cck_fields_fieldset']['pclzip_extra_cck_modules'] = array(
+            '#type'           => 'textfield',
+            '#title'          => t('CCK extra fields.'),
+            '#default_value'  => variable_get('pclzip_extra_cck_modules', "'imagefield','filefield'"),
+            '#description'    => t("Enter the cck extra files fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'imagefield','filefield'</strong>"),
           );
       }
     }
@@ -64,8 +64,8 @@ function pclzip_settings() {
 }
 
 /**
-* Check if the library exists
-*/
+ * Check if the library exists
+ */
 function pclzip_library_exists() {
   $pclzip_path = drupal_get_path('module', 'pclzip').'/pclzip/pclzip.lib.php';
   if (!is_file($pclzip_path)) {
@@ -76,8 +76,8 @@ function pclzip_library_exists() {
 }
 
 /*
-* Get extra fields form
-*/
+ * Get extra fields form
+ */
 function pclzip_get_extra_cck_fields() {
   // get the fields names
   $fields_names = array();
@@ -89,8 +89,8 @@ function pclzip_get_extra_cck_fields() {
 }
 
 /*
-* Build archive
-*/
+ * Build archive
+ */
 function pclzip_build_archive($filename) {
   // get the temp file
   global $pclzip_temp_file;
@@ -101,8 +101,8 @@ function pclzip_build_archive($filename) {
 }
 
 /**
-* Send the file
-*/
+ * Send the file
+ */
 function pclzip_send_file($filename) {
   global $pclzip_temp_file;
   // send the file
