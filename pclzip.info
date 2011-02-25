@@ -1,4 +1,3 @@
-; $Id$
 
 name = PclZip
 description = PclZip integration (see <a href="http://www.phpconcept.net/pclzip" target="_blank">the author's website</a> )
