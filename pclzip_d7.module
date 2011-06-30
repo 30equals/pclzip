@@ -1,0 +1,113 @@
+<?php
+
+/**
+ * Display help and module information
+ */
+function pclzip_d7_help($path, $arg) {
+  $output = '';
+  switch ($path) {
+    case "admin/help#pclzip":
+      $output = '<p>' . t('PclZip integration (see <a href="http://www.phpconcept.net/pclzip/index.en.php" target="_blank">the author\'s website</a> )') . '</p>';
+      break;
+  }
+  return $output;
+}
+
+/**
+ * Implementation of hook_menu
+ */
+function pclzip_d7_menu() {
+  $items = array();
+
+  $items['admin/settings/pclzip'] = array(
+    'title'             => 'Pclzip',
+    'description'       => 'Settings for the pclzip module.',
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('pclzip_d7_settings'),
+    'access arguments'  => array('administer site configuration'),
+    'type'              => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Admin settings
+ */
+function pclzip_d7_settings() {
+  if (pclzip_library_exists()) {
+    //drupal_set_message(t('Library is installed'));
+    $form = array();
+
+      // get field names
+      $form['pclzip_fields_fieldset'] = array(
+        '#type'         => 'fieldset',
+        '#title'        => t('Available fields'),
+        '#collapsible'  => TRUE,
+        '#collapsed'    => TRUE,
+      );
+      $form['pclzip_fields_fieldset']['pclzip_available_fields'] = array(
+        '#type'           => 'textfield',
+        '#title'          => t('Available fields.'),
+        '#default_value'  => variable_get('pclzip_field_types', "'image','file'"),
+        '#description'    => t("Enter the fields to use with pclzip sub modules. Separate with a comma, use ' or \" and remove white spaces. Default value is : <strong>'image','file'</strong>"),
+      );
+  }
+    if (count($form)) {
+      return system_settings_form($form);
+    }
+}
+
+/**
+ * Check if the library exists
+ */
+function pclzip_library_exists() {
+  $pclzip_path = drupal_get_path('module', 'pclzip_d7') . '/pclzip/pclzip.lib.php';
+  if (!is_file($pclzip_path)) {
+    drupal_set_message(t("Could not find the PclZip library file : @pclzip_path", array('@pclzip_path' => $pclzip_path)), 'error');
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/*
+ * Get extra fields form
+ */
+function pclzip_get_fields() {
+  // get the fields names
+  $fields_names = array();
+  $result = db_query("SELECT field_name FROM {field_config} WHERE type IN (" . variable_get('pclzip_field_types', "'image','file'") . ")");
+  foreach ($result as $field) {
+    $fields_names[$field->field_name] = $field->field_name;
+  }
+  return $fields_names;
+}
+
+/*
+ * Build archive
+ */
+function pclzip_build_archive($filename) {
+  // get the temp file
+  global $_pclzip_temp_file;
+  $pclzip_temp_file = tempnam(file_directory_temp(), $filename);
+  // build the archive
+  require_once('pclzip/pclzip.lib.php');
+  return new PclZip($pclzip_temp_file);
+}
+
+/**
+ * Send the file
+ */
+function pclzip_send_file($filename) {
+  global $_pclzip_temp_file;
+  // send the file
+  header('Content-Type: application/zip') ;
+  header('Content-Disposition: inline; filename=' . $filename) ;
+  header("Content-Transfer-Encoding: binary");
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+  header('Pragma: public');
+  header("Expires: 0");
+  header("Content-Length: " . filesize($pclzip_temp_file));
+  readfile($pclzip_temp_file);
+  exit;
+}
