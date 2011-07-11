@@ -107,7 +107,7 @@ function pclzip_send_file($filename) {
   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
   header('Pragma: public');
   header("Expires: 0");
-  header("Content-Length: " . filesize($pclzip_temp_file));
-  readfile($pclzip_temp_file);
+  header("Content-Length: " . filesize($_pclzip_temp_file));
+  readfile($_pclzip_temp_file);
   exit;
 }
