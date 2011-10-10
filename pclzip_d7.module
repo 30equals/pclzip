@@ -76,7 +76,8 @@ function pclzip_library_exists() {
 function pclzip_get_fields() {
   // get the fields names
   $fields_names = array();
-  $result = db_query("SELECT field_name FROM {field_config} WHERE type IN (:files)",array(':files'  =>  variable_get('pclzip_field_types', "'image','file'")));
+  $field_types = variable_get('pclzip_field_types', "'image','file'");
+  $result = db_query("SELECT field_name FROM {field_config} WHERE type IN (" . db_placeholders($field_types, 'varchar') . ")");
   foreach ($result as $field) {
     $fields_names[$field->field_name] = $field->field_name;
   }
