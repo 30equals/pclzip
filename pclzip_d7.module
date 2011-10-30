@@ -93,7 +93,7 @@ function pclzip_get_fields() {
       'image' =>  'image',
       'file'  =>  'file',
     );
-  $result = db_query("SELECT field_name FROM {field_config} WHERE type IN (:files)",array(':files'  =>  variable_get('pclzip_available_fields',$defaults)));
+  $result = db_query("SELECT field_name FROM {field_config} WHERE type IN (:files)",array(':files'  =>  variable_get('pclzip_available_fields', $defaults)));
   foreach ($result as $field) {
     $fields_names[$field->field_name] = $field->field_name;
   }
