@@ -1,3 +1,0 @@
-
-Go to http://www.phpconcept.net/pclzip/index.en.php and download the latest version.
-Then uncompress the contents and copy the file named pclzip.lib.php here.
