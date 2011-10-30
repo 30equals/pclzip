@@ -28,12 +28,12 @@ function pclzip_d7_menu() {
   $items = array();
 
   $items['admin/settings/pclzip'] = array(
-      'title'  =>  'Pclzip',
-      'description'  =>  'Settings for the pclzip module.',
-      'page callback'  =>  'drupal_get_form',
-      'page arguments'  =>  array('pclzip_d7_settings'),
-      'access arguments'  =>  array('administer site configuration'),
-      'type'  =>  MENU_NORMAL_ITEM,
+    'title'  =>  'Pclzip',
+    'description'  =>  'Settings for the pclzip module.',
+    'page callback'  =>  'drupal_get_form',
+    'page arguments'  =>  array('pclzip_d7_settings'),
+    'access arguments'  =>  array('administer site configuration'),
+    'type'  =>  MENU_NORMAL_ITEM,
   );
 
   return $items;
