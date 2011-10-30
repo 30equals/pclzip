@@ -43,9 +43,11 @@ function pclzip_d7_menu() {
  * Admin settings
  */
 function pclzip_d7_settings() {
+
+  $form = array();
+  
   if (pclzip_library_exists()) {
     //drupal_set_message(t('Library is installed'));
-    $form = array();
     $options = array(
       'image' =>  'image',
       'file'  =>  'file',
