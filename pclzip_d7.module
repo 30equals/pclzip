@@ -51,7 +51,7 @@ function pclzip_d7_settings() {
       'file'  =>  'file',
     );
 
-    // get field names
+    // Get the field names.
     $form['pclzip_fields_fieldset'] = array(
       '#type'  =>  'fieldset',
       '#title'  =>  t('Available fields'),
@@ -87,7 +87,7 @@ function pclzip_library_exists() {
  * Get extra fields form.
  */
 function pclzip_get_fields() {
-  // get the fields names
+  // Get the fields names.
   $fields_names = array();
   $defaults = array(
       'image' =>  'image',
@@ -104,10 +104,10 @@ function pclzip_get_fields() {
  * Build archive.
  */
 function pclzip_build_archive($filename) {
-  // get the temp file
+  // Get the temp file.
   global $_pclzip_temp_file;
   $pclzip_temp_file = tempnam(file_directory_temp(), $filename);
-  // build the archive
+  // Build the archive.
   require_once('pclzip/pclzip.lib.php');
   return new PclZip($pclzip_temp_file);
 }
@@ -117,7 +117,7 @@ function pclzip_build_archive($filename) {
  */
 function pclzip_send_file($filename) {
   global $_pclzip_temp_file;
-  // send the file
+  // Send the file.
   header('Content-Type: application/zip');
   header('Content-Disposition: inline; filename=' . $filename);
   header("Content-Transfer-Encoding: binary");
