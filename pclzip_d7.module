@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * @file
+ * Pclzip module
+ *
+ * This module enables downloading of files and images as one zip
+ *
+ */
+
+/**
  * Display help and module information
  */
 function pclzip_d7_help($path, $arg) {
