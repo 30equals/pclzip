@@ -75,7 +75,7 @@ function pclzip_d7_settings() {
  * Check if the library exists.
  */
 function pclzip_library_exists() {
-  $pclzip_path = drupal_get_path('module', 'pclzip_d7') . '/pclzip/pclzip.lib.php';
+  $pclzip_path = libraries_get_path('pclzip.lib.php');
   if (!is_file($pclzip_path)) {
     drupal_set_message(t('Could not find the PclZip library file : @pclzip_path', array('@pclzip_path' => $pclzip_path)), 'error');
     return FALSE;
