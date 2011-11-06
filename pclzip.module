@@ -11,7 +11,7 @@
 /**
  * Display help and module information
  */
-function pclzip_d7_help($path, $arg) {
+function pclzip_help($path, $arg) {
   $output = '';
   switch ($path) {
     case "admin/help#pclzip":
@@ -24,14 +24,14 @@ function pclzip_d7_help($path, $arg) {
 /**
  * Implements hook_menu().
  */
-function pclzip_d7_menu() {
+function pclzip_menu() {
   $items = array();
 
   $items['admin/settings/pclzip'] = array(
     'title'  =>  'Pclzip',
     'description'  =>  'Settings for the pclzip module.',
     'page callback'  =>  'drupal_get_form',
-    'page arguments'  =>  array('pclzip_d7_settings'),
+    'page arguments'  =>  array('pclzip_settings'),
     'access arguments'  =>  array('administer site configuration'),
     'type'  =>  MENU_NORMAL_ITEM,
   );
@@ -42,7 +42,7 @@ function pclzip_d7_menu() {
 /**
  * Admin settings
  */
-function pclzip_d7_settings() {
+function pclzip_settings() {
 
   $form = array();
   
